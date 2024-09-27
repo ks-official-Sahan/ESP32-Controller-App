@@ -4,7 +4,7 @@
     "slug": "aura",
     "scheme": "aura",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "auto",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
