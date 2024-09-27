@@ -1,25 +1,27 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, } from "react-native";
 import { Redirect, router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import images from "../constants/images";
 import CustomButton from "@/components/CustomButton";
 import { StatusBar } from "expo-status-bar";
+import DefaultBackgroundWrapper from "@/components/wrappers/DefaultBackgroundWrapper";
+import { Image } from "expo-image";
 
 const Index = () => {
   return (
-    <SafeAreaView className="bg-primary h-full">
-      <ScrollView contentContainerStyle={{ height: "100%" }}>
+    <DefaultBackgroundWrapper>
         <View className="w-full min-h-[85vh] items-center justify-center px-4 lg:px-6 py-2">
           <Image
             source={images.logo}
             className="w-[150px] h-[84px]"
-            resizeMode="contain"
+            contentFit="contain"
+            transition={1000}
           />
           <Image
             source={images.cards}
             className="max-w-[350px] w-full h-[300px]"
-            resizeMode="contain"
+            contentFit="contain"
+            transition={1000}
           />
 
           <View className="relative mt-5">
@@ -45,9 +47,7 @@ const Index = () => {
             containerStyle={"w-full mt-7"}
           />
         </View>
-      </ScrollView>
-      <StatusBar style="light" backgroundColor="#161622" />
-    </SafeAreaView>
+    </DefaultBackgroundWrapper>
   );
 };
 
