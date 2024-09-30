@@ -3,16 +3,26 @@ import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const DefaultBackgroundWrapper = ({ children, containerStyle, colors }) => {
+interface WrapperProps {
+  children: React.ReactNode;
+  containerStyle?: string;
+  colors?: string[];
+  isScroll?: boolean;
+}
+
+const DefaultBackgroundWrapper = ({
+  children,
+  containerStyle,
+  colors,
+  isScroll = true,
+}: WrapperProps) => {
   return (
-    <SafeAreaView className={`bg-primary h-full ${containerStyle}`}>
+    <SafeAreaView className={`h-full ${containerStyle}`}>
       <LinearGradient
         colors={colors ? colors : ["#161622", "#161850"]}
         className="h-full w-full"
       >
-        <ScrollView contentContainerStyle={{ height: "100%" }}>
-          {children}
-        </ScrollView>
+        {isScroll ? <ScrollView>{children}</ScrollView> : children}
       </LinearGradient>
       <StatusBar style="light" backgroundColor="#161622" />
     </SafeAreaView>

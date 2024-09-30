@@ -3,12 +3,11 @@ import {
   View,
   Text,
   TextInput,
-  Touchable,
-  Image,
   TouchableOpacity,
 } from "react-native";
 
 import icons from "@/constants/icons";
+import { Image } from "expo-image";
 
 interface FormFieldProps {
   title?: string;
@@ -50,7 +49,8 @@ const FormField = ({
           >
             <Image
               source={!showPassword ? icons.eye : icons.eyeHide}
-              resizeMode={"contain"}
+              contentFit={"contain"}
+              transition={1000}
               className="w-6 h-6"
             />
           </TouchableOpacity>

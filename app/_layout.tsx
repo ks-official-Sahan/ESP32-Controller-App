@@ -1,7 +1,14 @@
 import { useEffect } from "react";
-import { SplashScreen, Stack } from "expo-router";
+
 import "react-native-reanimated";
+
 import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
+import { SplashScreen, Stack } from "expo-router";
+
+import GlobalProvider from "@/context/GlobalProvider";
+
+import ROUTES from "@/constants/routes";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,6 +30,7 @@ const RootLayout = () => {
   /*
     useEffect hook: provide a callback function and the dependency array. 
     And the dependency array, meaning recall this function whenever dependency change. 
+    Empty dependency array means it only calls useEffect on loading.
   */
   useEffect(() => {
     // if error occurred on font loading
@@ -37,13 +45,17 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
 
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="search/[query]" options={{ headerShown: false }} />
-      <Stack.Screen name="+not-found" options={{ headerShown: false }} />
-    </Stack>
+    <GlobalProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={ROUTES.TABS} />
+        <Stack.Screen name={ROUTES.AUTH} />
+        <Stack.Screen name={ROUTES.INDEX} />
+        <Stack.Screen name={ROUTES.SEARCH} />
+        <Stack.Screen name={ROUTES.NOT_FOUND} />
+        {/* <Stack.Screen name={ROUTES.TABS} options={{ headerShown: false }} /> */}
+      </Stack>
+      <StatusBar style="light" backgroundColor="#161622" />
+    </GlobalProvider>
   );
 };
 

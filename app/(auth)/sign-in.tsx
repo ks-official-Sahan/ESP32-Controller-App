@@ -1,17 +1,41 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import images from "@/constants/images";
 import FormField from "@/components/FormField";
 import { useState } from "react";
 import CustomButton from "@/components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router, Redirect } from "expo-router";
 import DefaultBackgroundWrapper from "@/components/wrappers/DefaultBackgroundWrapper";
 import { Image } from "expo-image";
+import fetchInstance from "@/lib/fetch";
+import { createUser, signIn } from "@/lib/appwrite";
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submit = () => {};
+  const submit = async () => {
+    if (!form.email || !form.password) {
+      //return Alert.alert("Warning 🔴", "Please fill in all fields ⚠️");
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      /* Fetch */
+      //const response = await fetchInstance("/");
+
+      /* Appwrite */
+      // const result = await signIn(form.email, form.password);
+
+      // set user to global state
+
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("Error", `Something went wrong: ${error.message}`);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <DefaultBackgroundWrapper>
@@ -44,7 +68,7 @@ const SignIn = () => {
 
         <CustomButton
           title={"Sign In"}
-          handlePress={() => submit}
+          handlePress={() => submit()}
           isLoading={isSubmitting}
           containerStyle="mt-8"
         />
