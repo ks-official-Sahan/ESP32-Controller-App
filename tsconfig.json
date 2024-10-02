@@ -20,5 +20,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "tailwind.config.js"
-, "constants/icons.js", "constants/images.js", "constants/index.js", "lib/fetch.ts", "lib/appwrite.js", "context/GlobalProvider.jsx"  ]
+, "constants/icons.js", "constants/images.js", "constants/index.js", "lib/fetch.ts", "lib/appwrite.js", "context/GlobalProvider.jsx", "components/chat/ChatItem.tsx"  ]
 }
