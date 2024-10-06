@@ -15,7 +15,7 @@ const ROUTES = {
   BOOKMARK: "bookmark",
   PROFILE: "profile",
   CREATE: "create",
-  CHAT: "chat",
+  CHAT: "chatlist",
 };
 
 export default ROUTES;

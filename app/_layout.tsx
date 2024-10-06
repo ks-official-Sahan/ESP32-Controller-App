@@ -8,6 +8,8 @@ import { SplashScreen, Stack } from "expo-router";
 
 import GlobalProvider from "@/context/GlobalProvider";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import ROUTES from "@/constants/routes";
 
 SplashScreen.preventAutoHideAsync();
@@ -46,15 +48,17 @@ const RootLayout = () => {
 
   return (
     <GlobalProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={ROUTES.TABS} />
-        <Stack.Screen name={ROUTES.AUTH} />
-        <Stack.Screen name={ROUTES.INDEX} />
-        <Stack.Screen name={ROUTES.SEARCH} />
-        <Stack.Screen name={ROUTES.NOT_FOUND} />
-        {/* <Stack.Screen name={ROUTES.TABS} options={{ headerShown: false }} /> */}
-      </Stack>
-      <StatusBar style="light" backgroundColor="#161622" />
+      <GestureHandlerRootView>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name={ROUTES.TABS} />
+          <Stack.Screen name={ROUTES.AUTH} />
+          <Stack.Screen name={ROUTES.INDEX} />
+          <Stack.Screen name={ROUTES.SEARCH} />
+          <Stack.Screen name={ROUTES.NOT_FOUND} />
+          {/* <Stack.Screen name={ROUTES.TABS} options={{ headerShown: false }} /> */}
+        </Stack>
+        <StatusBar style="light" backgroundColor="#161622" />
+      </GestureHandlerRootView>
     </GlobalProvider>
   );
 };

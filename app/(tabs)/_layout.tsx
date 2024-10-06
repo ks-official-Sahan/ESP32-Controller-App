@@ -5,6 +5,7 @@ import icons from "../../constants/icons";
 import { Image } from "expo-image";
 import ROUTES from "@/constants/routes";
 import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
 
 export const TabIcon = ({ icon, color, name, focused }) => {
   return (
