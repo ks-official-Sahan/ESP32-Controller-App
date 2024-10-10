@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import API_CONFIG, { getUser, ResponseDTO, RESULT, saveUser } from "../../api";
-import { handleError, handleResponse } from "./main";
+import { handleError, handleResponse, handleResult } from "./main";
 
 export const getCurrentUser = async () => {
   const user = await getUser();
@@ -19,21 +19,29 @@ export const signup = async ({ username, email, password }) => {
 
     const responseDto: ResponseDTO = await handleResponse(response);
 
-    if (!responseDto.success) {
-      // if (responseDto.error) throw new Error(responseDto.error);
-      Alert.alert(responseDto.message);
-      return { status: RESULT.message, target: responseDto.target };
+    // if (!responseDto.success) {
+    //   // if (responseDto.error) throw new Error(responseDto.error);
+    //   Alert.alert(responseDto.message);
+    //   return { status: RESULT.message, target: responseDto.target };
+    // }
+
+    // // if user data received save and return user
+    // if (responseDto.data) {
+    //   const user = responseDto.data;
+    //   await saveUser(user);
+
+    //   return { status: RESULT.data };
+    // }
+
+    // return { status: RESULT.success };
+
+    const result = handleResult(responseDto);
+
+    if (result.data) {
+      await saveUser(result.data);
     }
 
-    // if user data received save and return user
-    if (responseDto.data) {
-      const user = responseDto.data;
-      await saveUser(user);
-
-      return { status: RESULT.data };
-    }
-
-    return { status: RESULT.success };
+    return result;
   } catch (error) {
     handleError(error);
   }
