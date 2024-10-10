@@ -1,5 +1,5 @@
-//import { getCurrentUser } from "@/lib/appwrite";
 import { getCurrentUser } from "@/lib/actions/fetch/auth";
+import { removeUser } from "@/lib/api";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const GlobalContext = createContext();
@@ -11,23 +11,25 @@ const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async () => {
-      try {
-        const user = await getCurrentUser();
-        if (user) {
-          setUser(user);
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-          setUser(null);
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
+  const fetchUser = async () => {
+    try {
+      const user = await getCurrentUser();
+      if (user) {
+        setUser(user);
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
   }, []);
 
   return (

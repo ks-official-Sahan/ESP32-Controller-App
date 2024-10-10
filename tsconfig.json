@@ -27,5 +27,5 @@
     "lib/appwrite.js",
     "context/GlobalProvider.jsx",
     "components/chat/ChatListItem.tsx"
-  ]
+, "components/Trending.tsx"  ]
 }

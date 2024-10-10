@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
-const ChatHeader = ({ chat, isActive }) => {
+const ChatHeader = ({ chat, isActive, status = "Last seen recently" }) => {
   return (
     <View className="py-2 items-center border-b-2 border-gray-800 mb-3 flex-row justify-between">
       <View className="flex-row px-4 space-x-2 ">
@@ -35,7 +35,20 @@ const ChatHeader = ({ chat, isActive }) => {
             Alert.alert("User", chat);
           }}
         >
-          <Text className="text-white text-xl font-psemibold">{chat}</Text>
+          <View>
+            <Text
+              className="text-white text-xl font-psemibold"
+              numberOfLines={1}
+            >
+              {chat}
+            </Text>
+            <Text
+              className="text-gray-300 text-base text-xs font-pregular"
+              numberOfLines={1}
+            >
+              {status}
+            </Text>
+          </View>
         </TouchableHighlight>
       </View>
 

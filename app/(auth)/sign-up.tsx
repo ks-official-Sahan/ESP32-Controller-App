@@ -2,12 +2,18 @@ import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import DefaultBackgroundWrapper from "@/components/wrappers/DefaultBackgroundWrapper";
 import images from "@/constants/images";
-import { createUser } from "@/lib/appwrite";
-import fetchInstance from "@/lib/fetch";
+import { signup } from "@/lib/actions/fetch/auth";
+import { RESULT } from "@/lib/api";
 import { Image } from "expo-image";
 import { Link, router, Redirect } from "expo-router";
 import { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 
 const SignUp = () => {
   const [form, setForm] = useState({ email: "", password: "", username: "" });
@@ -21,15 +27,13 @@ const SignUp = () => {
     setIsSubmitting(true);
 
     try {
-      /* Fetch */
-      //const response = await fetchInstance('/');
+      const result = await signup(form);
 
-      /* Appwrite */
-      //const result = await createUser(form);
-
-      // set user to global state
-
-      router.replace("/home");
+      if (result.status === RESULT.data) {
+        router.replace("/home");
+      } else if (result.status === RESULT.success) {
+        router.replace("/sign-in");
+      }
     } catch (error) {
       Alert.alert("Error", `Something went wrong: ${error.message}`);
     } finally {
@@ -48,28 +52,33 @@ const SignUp = () => {
         />
         <Text className="text-2xl text-white font-psemibold mt-10">SignUp</Text>
 
-        <FormField
-          title={"Username"}
-          placeholder={"Your unique Username"}
-          otherStyle="mt-4"
-          value={form.username}
-          handleTextChange={(u: any) => setForm({ ...form, username: u })}
-        />
-        <FormField
-          title={"Email"}
-          placeholder={"Enter your Email"}
-          otherStyle="mt-4"
-          value={form.email}
-          handleTextChange={(e: any) => setForm({ ...form, email: e })}
-          keyboardType="email-address"
-        />
-        <FormField
-          title={"Password"}
-          placeholder={"Enter your Password"}
-          otherStyle="mt-4"
-          value={form.password}
-          handleTextChange={(p: any) => setForm({ ...form, password: p })}
-        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+        >
+          <FormField
+            title={"Username"}
+            placeholder={"Your unique Username"}
+            otherStyle="mt-4"
+            value={form.username}
+            handleTextChange={(u: any) => setForm({ ...form, username: u })}
+          />
+          <FormField
+            title={"Email"}
+            placeholder={"Enter your Email"}
+            otherStyle="mt-4"
+            value={form.email}
+            handleTextChange={(e: any) => setForm({ ...form, email: e })}
+            keyboardType="email-address"
+          />
+          <FormField
+            title={"Password"}
+            placeholder={"Enter your Password"}
+            otherStyle="mt-4"
+            value={form.password}
+            handleTextChange={(p: any) => setForm({ ...form, password: p })}
+          />
+        </KeyboardAvoidingView>
 
         <CustomButton
           title={"Sign Up"}

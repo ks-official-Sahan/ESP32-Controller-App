@@ -10,30 +10,32 @@ import ChatListItem from "@/components/chat/ChatListItem";
 const Chat = () => {
   const [chatList, setChatList] = useState([]);
 
-  const loadChatList = async (list) => {
+  const list = [
+    {
+      id: 1,
+      user: "Shashi",
+      message: "Sahi, I'm looking forward to see you",
+      time: new Date().toLocaleString(),
+      isActive: true,
+      status: MessageStatus.sent,
+    },
+    {
+      id: 2,
+      user: "Chathura",
+      message: "Hello Sahan, I'm looking forward to see you",
+      time: new Date().toLocaleString(),
+      isActive: true,
+      status: MessageStatus.sent,
+    },
+  ];
+
+  const loadChatList = async () => {
+    
     setChatList(list);
   };
 
   useEffect(() => {
-    const list = [
-      {
-        id: 1,
-        user: "Shashi",
-        message: "Sahi, I'm looking forward to see you",
-        time: new Date().toLocaleString(),
-        isActive: true,
-        status: MessageStatus.sent,
-      },
-      {
-        id: 2,
-        user: "Amandi",
-        message: "Hello Sahan, I'm looking forward to see you",
-        time: new Date().toLocaleString(),
-        isActive: true,
-        status: MessageStatus.sent,
-      },
-    ];
-    loadChatList(list);
+    loadChatList();
   }, []);
 
   const openChat = (user) => {

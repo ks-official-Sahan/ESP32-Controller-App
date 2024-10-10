@@ -1,7 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export const APP_NAME = "Aura";
+const SERVER_URL = "https://5ea4-45-121-91-242.ngrok-free.app";
+
 const API_CONFIG = {
-  baseURL: "https://a552-45-121-91-16.ngrok-free.app/SmartTrade",
+  baseURL: `${SERVER_URL}/${APP_NAME}`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,12 +14,25 @@ export default API_CONFIG;
 
 interface ResponseDTO {
   success?: boolean;
+  target?: string;
   message?: string;
   data?: any;
   error?: any;
 }
 
 export type { ResponseDTO };
+
+export enum RESULT {
+  success = "success",
+  data = "data",
+  target = "target",
+  message = "message",
+  error = "error",
+}
+
+/* 
+  Handle User Data Storage
+ */
 
 export const saveUser = async (user: any) => {
   try {

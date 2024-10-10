@@ -1,8 +1,8 @@
-import { FontAwesome6 } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { Text, TouchableOpacity } from "react-native";
 
 interface CustomIconButtonProps {
-  icon: string;
+  icon: any;
   size?: number;
   color?: string;
   title?: string;
@@ -10,6 +10,7 @@ interface CustomIconButtonProps {
   containerStyle?: string;
   textStyle?: string;
   isLoading?: boolean;
+  iconType?: string;
 }
 
 const CustomIconButton = ({
@@ -21,6 +22,7 @@ const CustomIconButton = ({
   containerStyle,
   textStyle,
   isLoading,
+  iconType = "font-awesome",
 }: CustomIconButtonProps) => {
   return (
     <TouchableOpacity
@@ -33,7 +35,11 @@ const CustomIconButton = ({
         isLoading && "opacity-50"
       }`}
     >
-      <FontAwesome6 name={icon} size={size} color={color} />
+      {iconType !== "font-awesome" ? (
+        <Ionicons name={icon} size={size} color={color} />
+      ) : (
+        <FontAwesome6 name={icon} size={size} color={color} />
+      )}
       {title && (
         <Text className={`text-lg text-primary font-psemibold ${textStyle}`}>
           {title}

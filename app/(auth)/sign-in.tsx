@@ -1,4 +1,10 @@
-import { View, Text, Alert } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import images from "@/constants/images";
 import FormField from "@/components/FormField";
 import { useState } from "react";
@@ -8,6 +14,8 @@ import DefaultBackgroundWrapper from "@/components/wrappers/DefaultBackgroundWra
 import { Image } from "expo-image";
 import fetchInstance from "@/lib/fetch";
 import { createUser, signIn } from "@/lib/appwrite";
+import { signin } from "@/lib/actions/fetch/auth";
+import { RESULT } from "@/lib/api";
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -15,21 +23,19 @@ const SignIn = () => {
 
   const submit = async () => {
     if (!form.email || !form.password) {
-      //return Alert.alert("Warning 🔴", "Please fill in all fields ⚠️");
+      return Alert.alert("Warning 🔴", "Please fill in all fields ⚠️");
     }
 
     setIsSubmitting(true);
 
     try {
-      /* Fetch */
-      //const response = await fetchInstance("/");
+      const result = await signin(form);
 
-      /* Appwrite */
-      // const result = await signIn(form.email, form.password);
-
-      // set user to global state
-
-      router.replace("/home");
+      if (result.status === RESULT.data) {
+        router.replace("/home");
+      } else if (result.status === RESULT.message) {
+        router.replace("/sign-up");
+      }
     } catch (error) {
       Alert.alert("Error", `Something went wrong: ${error.message}`);
     } finally {
@@ -50,21 +56,26 @@ const SignIn = () => {
           Sign In
         </Text>
 
-        <FormField
-          title={"Email"}
-          value={form.email}
-          placeholder={"Enter your Email"}
-          otherStyle="mt-7"
-          handleTextChange={(e: any) => setForm({ ...form, email: e })}
-          keyboardType="email-address"
-        />
-        <FormField
-          title={"Password"}
-          value={form.password}
-          placeholder={"Enter your Password"}
-          otherStyle="mt-7"
-          handleTextChange={(p: any) => setForm({ ...form, password: p })}
-        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+        >
+          <FormField
+            title={"Email"}
+            value={form.email}
+            placeholder={"Enter your Email"}
+            otherStyle="mt-7"
+            handleTextChange={(e: any) => setForm({ ...form, email: e })}
+            keyboardType="email-address"
+          />
+          <FormField
+            title={"Password"}
+            value={form.password}
+            placeholder={"Enter your Password"}
+            otherStyle="mt-7"
+            handleTextChange={(p: any) => setForm({ ...form, password: p })}
+          />
+        </KeyboardAvoidingView>
 
         <CustomButton
           title={"Sign In"}

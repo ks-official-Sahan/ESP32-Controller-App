@@ -1,39 +1,17 @@
 import { Alert } from "react-native";
-import API_CONFIG, { ResponseDTO, saveUser } from "../../api";
+import API_CONFIG, { getUser, ResponseDTO, RESULT, saveUser } from "../../api";
+import { handleError, handleResponse } from "./main";
 
 export const getCurrentUser = async () => {
-  return {
-    email: "Sahan@gmail.com",
-    password: "password",
-    username: "Sahan",
-  };
+  const user = await getUser();
+  if (user) return user;
+  return Alert.alert("Please Login");
 };
 
-const handleResponse = async (response) => {
-  try {
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.statusText}`, {
-        cause: response,
-        // cause: response.status,
-        // response,
-      });
-    }
-
-    return await response.json();
-  } catch (error) {
-    throw error; // re-throw the error for error handling
-  }
-};
-
-const handleError = (error) => {
-  console.error("Fetch error:", error);
-  /* re-throw the error if needed */
-  // throw error;
-};
-
+/* Sign Up */
 export const signup = async ({ username, email, password }) => {
   try {
-    const response = await fetch(`${API_CONFIG.baseURL}/auth/signup`, {
+    const response = await fetch(`${API_CONFIG.baseURL}/auth/SignUp`, {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
       headers: API_CONFIG.headers,
@@ -42,14 +20,20 @@ export const signup = async ({ username, email, password }) => {
     const responseDto: ResponseDTO = await handleResponse(response);
 
     if (!responseDto.success) {
-      return Alert.alert(responseDto.message);
+      // if (responseDto.error) throw new Error(responseDto.error);
+      Alert.alert(responseDto.message);
+      return { status: RESULT.message, target: responseDto.target };
     }
-    // if (responseDto.error) throw new Error(responseDto.error);
 
-    const user = responseDto.data;
+    // if user data received save and return user
+    if (responseDto.data) {
+      const user = responseDto.data;
+      await saveUser(user);
 
-    // return await saveUser(user);
-    return user;
+      return { status: RESULT.data };
+    }
+
+    return { status: RESULT.success };
   } catch (error) {
     handleError(error);
   }
@@ -57,7 +41,7 @@ export const signup = async ({ username, email, password }) => {
 
 export const signin = async ({ email, password }) => {
   try {
-    const response = await fetch(`${API_CONFIG.baseURL}/auth/signin`, {
+    const response = await fetch(`${API_CONFIG.baseURL}/auth/SignIn`, {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: API_CONFIG.headers,
@@ -66,13 +50,14 @@ export const signin = async ({ email, password }) => {
     const responseDto: ResponseDTO = await handleResponse(response);
 
     if (!responseDto.success) {
-      return Alert.alert(responseDto.message);
+      Alert.alert(responseDto.message);
+      return { status: RESULT.message, target: responseDto.target };
     }
 
     const user = responseDto.data;
 
-    // return await saveUser(user);
-    return user;
+    await saveUser(user);
+    return { status: RESULT.data };
   } catch (error) {
     handleError(error);
   }

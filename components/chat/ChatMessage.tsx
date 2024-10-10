@@ -36,15 +36,16 @@ const ChatMessage = ({
             }`}
           >
             <Text className="text-xs text-gray-300">{time}</Text>
-            {status === "read" ? (
-              <FontAwesome6 name={"check-double"} color={"green"} size={15} />
-            ) : status === "delivered" ? (
-              <FontAwesome6 name={"check-double"} color={"white"} size={15} />
-            ) : status === "sent" ? (
-              <FontAwesome6 name={"check"} color={"white"} size={15} />
-            ) : (
-              <FontAwesome6 name={"clock"} color={"white"} size={15} />
-            )}
+            {isMe &&
+              (status === "read" ? (
+                <FontAwesome6 name={"check-double"} color={"aqua"} size={15} />
+              ) : status === "delivered" ? (
+                <FontAwesome6 name={"check-double"} color={"white"} size={15} />
+              ) : status === "sent" ? (
+                <FontAwesome6 name={"check"} color={"white"} size={13} />
+              ) : (
+                <FontAwesome6 name={"clock"} color={"white"} size={15} />
+              ))}
           </View>
         </View>
       </View>

@@ -9,6 +9,7 @@ interface WrapperProps {
   parentStyle?: string;
   colors?: string[];
   isScroll?: boolean;
+  isKeyboard?: boolean;
 }
 
 const DefaultBackgroundWrapper = ({
@@ -17,6 +18,7 @@ const DefaultBackgroundWrapper = ({
   parentStyle,
   colors,
   isScroll = true,
+  isKeyboard = true
 }: WrapperProps) => {
   return (
     <SafeAreaView className={`h-full ${containerStyle}`}>
