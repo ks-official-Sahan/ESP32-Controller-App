@@ -1,6 +1,5 @@
-import API_CONFIG, { ResponseDTO, RESULT } from "@/lib/api";
-import { handleError, handleResponse } from "./main";
-import { Alert } from "react-native";
+import API_CONFIG, { ResponseDTO } from "@/lib/api";
+import { handleError, handleResponse, handleResult } from "./main";
 
 export const loadChatList = async (uid) => {
   try {
@@ -14,16 +13,14 @@ export const loadChatList = async (uid) => {
 
     const responseDto: ResponseDTO = await handleResponse(response);
 
-    if (!responseDto.success) {
-      Alert.alert(responseDto.message);
-      return { status: RESULT.message, target: responseDto.target };
+    const result = handleResult(responseDto);
+
+    if (result.data) {
+      // alert(JSON.stringify(result.data));
+      // console.log("Chat List Result Data")
     }
 
-    if (responseDto.data) {
-      return { status: RESULT.data, data: responseDto.data };
-    }
-
-    return { status: RESULT.success };
+    return result;
   } catch (error) {
     handleError(error);
   }

@@ -1,11 +1,14 @@
 import { Alert } from "react-native";
 import API_CONFIG, { getUser, ResponseDTO, RESULT, saveUser } from "../../api";
 import { handleError, handleResponse, handleResult } from "./main";
+import { router } from "expo-router";
 
 export const getCurrentUser = async () => {
   const user = await getUser();
   if (user) return user;
-  return Alert.alert("Please Login");
+  // return Alert.alert("Please Login");
+  // return router.push("/sign-in");
+  return router.replace("/");
 };
 
 /* Sign Up */
@@ -18,22 +21,6 @@ export const signup = async ({ username, email, password }) => {
     });
 
     const responseDto: ResponseDTO = await handleResponse(response);
-
-    // if (!responseDto.success) {
-    //   // if (responseDto.error) throw new Error(responseDto.error);
-    //   Alert.alert(responseDto.message);
-    //   return { status: RESULT.message, target: responseDto.target };
-    // }
-
-    // // if user data received save and return user
-    // if (responseDto.data) {
-    //   const user = responseDto.data;
-    //   await saveUser(user);
-
-    //   return { status: RESULT.data };
-    // }
-
-    // return { status: RESULT.success };
 
     const result = handleResult(responseDto);
 
@@ -57,15 +44,21 @@ export const signin = async ({ email, password }) => {
 
     const responseDto: ResponseDTO = await handleResponse(response);
 
-    if (!responseDto.success) {
-      Alert.alert(responseDto.message);
-      return { status: RESULT.message, target: responseDto.target };
-    }
+    // if (!responseDto.success) {
+    //   Alert.alert(responseDto.message);
+    //   return { status: RESULT.message, target: responseDto.target };
+    // }
 
-    const user = responseDto.data;
+    // const user = responseDto.data;
 
-    await saveUser(user);
-    return { status: RESULT.data };
+    // await saveUser(user);
+    // return { status: RESULT.data };
+
+    const result = handleResult(responseDto);
+
+    await saveUser(result.data);
+
+    return result;
   } catch (error) {
     handleError(error);
   }

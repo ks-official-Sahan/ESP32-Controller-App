@@ -1,5 +1,4 @@
 import { getCurrentUser } from "@/lib/actions/fetch/auth";
-import { removeUser } from "@/lib/api";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const GlobalContext = createContext();
