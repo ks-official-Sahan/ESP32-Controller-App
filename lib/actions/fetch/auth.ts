@@ -2,6 +2,7 @@ import { Alert } from "react-native";
 import API_CONFIG, { getUser, ResponseDTO, RESULT, saveUser } from "../../api";
 import { handleError, handleResponse, handleResult } from "./main";
 import { router } from "expo-router";
+import { SIGN_IN, SIGN_UP } from "@/lib/endpoints";
 
 export const getCurrentUser = async () => {
   const user = await getUser();
@@ -14,7 +15,7 @@ export const getCurrentUser = async () => {
 /* Sign Up */
 export const signup = async ({ username, email, password }) => {
   try {
-    const response = await fetch(`${API_CONFIG.baseURL}/auth/SignUp`, {
+    const response = await fetch(API_CONFIG.baseURL + SIGN_UP, {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
       headers: API_CONFIG.headers,
@@ -36,13 +37,26 @@ export const signup = async ({ username, email, password }) => {
 
 export const signin = async ({ email, password }) => {
   try {
-    const response = await fetch(`${API_CONFIG.baseURL}/auth/SignIn`, {
+    const response = await fetch(API_CONFIG.baseURL + SIGN_IN, {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: API_CONFIG.headers,
     });
 
     const responseDto: ResponseDTO = await handleResponse(response);
+
+    const result = handleResult(responseDto);
+
+    await saveUser(result.data);
+
+    return result;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+/*
+  * Exact Same Thing
 
     // if (!responseDto.success) {
     //   Alert.alert(responseDto.message);
@@ -54,12 +68,11 @@ export const signin = async ({ email, password }) => {
     // await saveUser(user);
     // return { status: RESULT.data };
 
+    ||
+
     const result = handleResult(responseDto);
 
     await saveUser(result.data);
 
     return result;
-  } catch (error) {
-    handleError(error);
-  }
-};
+*/

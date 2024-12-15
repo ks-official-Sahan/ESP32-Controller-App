@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const APP_NAME = "Aura";
-const SERVER_URL = "https://5ea4-45-121-91-242.ngrok-free.app";
+export const SERVER_URL = "https://9e7d-45-121-91-37.ngrok-free.app";
 
 const API_CONFIG = {
   baseURL: `${SERVER_URL}/${APP_NAME}`,
@@ -31,8 +31,8 @@ export enum RESULT {
 }
 
 /* 
-  Handle User Data Storage
- */
+ Handle User Data Storage
+*/
 
 export const saveUser = async (user: any) => {
   try {

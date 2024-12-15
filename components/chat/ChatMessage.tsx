@@ -16,8 +16,13 @@ const ChatMessage = ({
   status = MessageStatus.sending,
 }: ChatMessageProps) => {
   // Determine if the message is long enough to warrant multi-line display
-  const isLongMessage = message.length > 20;
+  let isLongMessage = false;
 
+  if (message) {
+    if (message.length > 30) {
+      isLongMessage = true;
+    }
+  }
   return (
     <View className="w-full px-3">
       <View className={`max-w-[80%] ${isMe ? "self-end" : "self-start"}`}>
@@ -37,14 +42,14 @@ const ChatMessage = ({
           >
             <Text className="text-xs text-gray-300">{time}</Text>
             {isMe &&
-              (status === "read" ? (
+              (status === MessageStatus.read ? (
                 <FontAwesome6 name={"check-double"} color={"aqua"} size={15} />
-              ) : status === "delivered" ? (
+              ) : status === MessageStatus.delivered ? (
                 <FontAwesome6 name={"check-double"} color={"white"} size={15} />
-              ) : status === "sent" ? (
-                <FontAwesome6 name={"check"} color={"white"} size={13} />
+              ) : status === MessageStatus.sent ? (
+                <FontAwesome6 name={"check"} color={"white"} size={15} />
               ) : (
-                <FontAwesome6 name={"clock"} color={"white"} size={15} />
+                <FontAwesome6 name={"clock"} color={"white"} size={13} />
               ))}
           </View>
         </View>

@@ -7,6 +7,7 @@ import SearchInput from "@/components/SearchInput";
 import { getCurrentUser } from "@/lib/actions/fetch/auth";
 import Trending from "@/components/Trending";
 import EmptyState from "@/components/EmptyState";
+import { router } from "expo-router";
 
 const Home = () => {
   const [user, setUser] = useState({ username: "" });
@@ -26,7 +27,7 @@ const Home = () => {
       <FlatList
         data={[{ id: 1 }, { id: 2 }, { id: 3 }]}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => <Text className="text-white">{item.id}</Text>}
+        renderItem={({ item }) => <Text key={item.id} className="text-white">{item.id}</Text>}
         ListHeaderComponent={() => {
           return (
             <View className="my-6 space-y-6">
@@ -56,7 +57,9 @@ const Home = () => {
                   Latest Videos
                 </Text>
 
-                <Trending posts={[{ id: "1" }, { id: "2" }, { id: "3" }] ?? []} />
+                <Trending
+                  posts={[{ id: "1" }, { id: "2" }, { id: "3" }] ?? []}
+                />
               </View>
             </View>
           );
@@ -65,6 +68,10 @@ const Home = () => {
           <EmptyState
             title={"No Videos Found"}
             subtitle={"Be the first one to upload a video!"}
+            buttonText={"+ Create Video"}
+            handlePress={() => {
+              router.push("/create");
+            }}
           />
         )}
       />

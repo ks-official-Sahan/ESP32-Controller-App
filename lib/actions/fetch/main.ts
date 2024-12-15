@@ -27,8 +27,18 @@ export const handleError = (error) => {
 export const handleResult = (responseDto: ResponseDTO) => {
   if (!responseDto.success) {
     // if (responseDto.error) throw new Error(responseDto.error);
-    Alert.alert(responseDto.message);
-    return { status: RESULT.message, target: responseDto.target };
+    // Alert.alert(responseDto.message);
+    if (responseDto.target)
+      return {
+        status: RESULT.target,
+        target: responseDto.target,
+        message: responseDto.message,
+      };
+    if (responseDto.message)
+      return {
+        status: RESULT.message,
+        message: responseDto.message,
+      };
   }
 
   if (responseDto.data) {

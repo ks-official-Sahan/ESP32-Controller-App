@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 import { MessageStatus } from "./ChatListItem";
@@ -18,6 +18,7 @@ const ChatInput = ({
   setInputText,
   handleEmojiSelect,
   handleSend,
+  inputRef,
 }) => {
   const [isEmojiPickerVisible, setEmojiPickerVisible] = useState(false); // Toggle emoji picker visibility
   const [inputHeight, setInputHeight] = useState(26);
@@ -52,6 +53,8 @@ const ChatInput = ({
           value={inputText}
           onChangeText={setInputText}
           multiline={true}
+          ref={inputRef}
+          // numberOfLines={maxLines}
           onContentSizeChange={(event) => {
             const contentHeight = event.nativeEvent.contentSize.height;
             const newHeight = Math.min(contentHeight, maxLines * lineHeight);

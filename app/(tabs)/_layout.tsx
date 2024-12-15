@@ -62,6 +62,29 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
+          name={ROUTES.CHAT}
+          options={{
+            title: "Message",
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => {
+              return (
+                // <TabIcon
+                //   icon={icons.menu}
+                //   name={"Message"}
+                //   color={color}
+                //   focused={focused}
+                // />
+                <TabIonIcon
+                  icon={"chatbubble-outline"}
+                  name={"Message"}
+                  color={color}
+                  focused={focused}
+                />
+              );
+            },
+          }}
+        />
+        <Tabs.Screen
           name={ROUTES.HOME}
           options={{
             title: "Home",
@@ -70,7 +93,7 @@ const TabsLayout = () => {
               return (
                 <TabIcon
                   icon={icons.home}
-                  name={"Home"}
+                  name={"Status"}
                   color={color}
                   focused={focused}
                 />
@@ -105,29 +128,6 @@ const TabsLayout = () => {
                 <TabIcon
                   icon={icons.plus}
                   name={"Create"}
-                  color={color}
-                  focused={focused}
-                />
-              );
-            },
-          }}
-        />
-        <Tabs.Screen
-          name={ROUTES.CHAT}
-          options={{
-            title: "Message",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => {
-              return (
-                // <TabIcon
-                //   icon={icons.menu}
-                //   name={"Message"}
-                //   color={color}
-                //   focused={focused}
-                // />
-                <TabIonIcon
-                  icon={"chatbubble-outline"}
-                  name={"Message"}
                   color={color}
                   focused={focused}
                 />

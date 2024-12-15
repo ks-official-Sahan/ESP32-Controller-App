@@ -3,9 +3,8 @@ import React from "react";
 import { Image } from "expo-image";
 import { images } from "@/constants";
 import CustomButton from "./CustomButton";
-import { router } from "expo-router";
 
-const EmptyState = ({ title, subtitle }) => {
+const EmptyState = ({ title, subtitle, buttonText, handlePress }) => {
   return (
     <View className="justify-center items-center px-5">
       <Image
@@ -20,11 +19,9 @@ const EmptyState = ({ title, subtitle }) => {
       <Text className="text-gray-100 text-sm font-psemibold">{subtitle}</Text>
 
       <CustomButton
-        title="Create Video"
-        containerStyle="my-5 w-full"
-        handlePress={() => {
-          router.push("/create");
-        }}
+        title={buttonText ?? "Try Again"}
+        containerStyle="m-5 w-[60vw]"
+        handlePress={handlePress}
       />
     </View>
   );

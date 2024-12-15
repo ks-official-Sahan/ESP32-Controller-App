@@ -1,6 +1,5 @@
 import { View, KeyboardAvoidingView, Alert } from "react-native";
 import DefaultBackgroundWrapper from "@/components/wrappers/DefaultBackgroundWrapper";
-import ChatItem, { MessageStatus } from "@/components/chat/ChatListItem";
 import { useEffect, useState } from "react";
 import { FlashList } from "@shopify/flash-list";
 import { router, Href } from "expo-router";
@@ -9,6 +8,8 @@ import ChatListItem from "@/components/chat/ChatListItem";
 import { RESULT } from "@/lib/api";
 import { getCurrentUser } from "@/lib/actions/fetch/auth";
 import { loadChatList } from "@/lib/actions/fetch/chat";
+import { chatListData } from "@/constants";
+import EmptyState from "@/components/EmptyState";
 
 const Chat = () => {
   const [chatList, setChatList] = useState([]);
@@ -30,7 +31,7 @@ const Chat = () => {
 
   const openChat = ({ user, id }) => {
     // Alert.alert("Chat", user);
-    const route = `/chat/${user}`;
+    const route = `/chat/${user}?id=${id}`;
     router.push(route as Href<string>);
   };
 
@@ -65,6 +66,18 @@ const Chat = () => {
                 }}
               />
             )}
+            ListEmptyComponent={() => {
+              return (
+                <EmptyState
+                  title={"Loading Chats"}
+                  subtitle={"Please wait until chats being loaded"}
+                  handlePress={() => {
+                    fetchChatList();
+                  }}
+                  buttonText={"Try Again"}
+                />
+              );
+            }}
             // estimatedItemSize={chatList.length}
             estimatedItemSize={100}
           />
