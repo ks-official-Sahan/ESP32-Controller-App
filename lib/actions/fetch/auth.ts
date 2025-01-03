@@ -1,11 +1,11 @@
 import { Alert } from "react-native";
-import API_CONFIG, { getUser, ResponseDTO, RESULT, saveUser } from "../../api";
+import API_CONFIG, { getData, ResponseDTO, RESULT, saveData } from "../../api";
 import { handleError, handleResponse, handleResult } from "./main";
 import { router } from "expo-router";
 import { SIGN_IN, SIGN_UP } from "@/lib/endpoints";
 
 export const getCurrentUser = async () => {
-  const user = await getUser();
+  const user = await getData();
   if (user) return user;
   // return Alert.alert("Please Login");
   // return router.push("/sign-in");
@@ -26,7 +26,7 @@ export const signup = async ({ username, email, password }) => {
     const result = handleResult(responseDto);
 
     if (result.data) {
-      await saveUser(result.data);
+      await saveData("data", result.data);
     }
 
     return result;
@@ -47,7 +47,7 @@ export const signin = async ({ email, password }) => {
 
     const result = handleResult(responseDto);
 
-    await saveUser(result.data);
+    await saveData("data", result.data);
 
     return result;
   } catch (error) {
@@ -65,14 +65,14 @@ export const signin = async ({ email, password }) => {
 
     // const user = responseDto.data;
 
-    // await saveUser(user);
+    // await saveData("data", user);
     // return { status: RESULT.data };
 
     ||
 
     const result = handleResult(responseDto);
 
-    await saveUser(result.data);
+    await saveData("data", result.data);
 
     return result;
 */

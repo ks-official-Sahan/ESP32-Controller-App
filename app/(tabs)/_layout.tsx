@@ -62,29 +62,6 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
-          name={ROUTES.CHAT}
-          options={{
-            title: "Message",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => {
-              return (
-                // <TabIcon
-                //   icon={icons.menu}
-                //   name={"Message"}
-                //   color={color}
-                //   focused={focused}
-                // />
-                <TabIonIcon
-                  icon={"chatbubble-outline"}
-                  name={"Message"}
-                  color={color}
-                  focused={focused}
-                />
-              );
-            },
-          }}
-        />
-        <Tabs.Screen
           name={ROUTES.HOME}
           options={{
             title: "Home",
@@ -102,49 +79,15 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name={ROUTES.BOOKMARK}
+          name={ROUTES.SETTINGS}
           options={{
-            title: "Bookmark",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => {
-              return (
-                <TabIcon
-                  icon={icons.bookmark}
-                  name={"Bookmark"}
-                  color={color}
-                  focused={focused}
-                />
-              );
-            },
-          }}
-        />
-        <Tabs.Screen
-          name={ROUTES.CREATE}
-          options={{
-            title: "Create",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => {
-              return (
-                <TabIcon
-                  icon={icons.plus}
-                  name={"Create"}
-                  color={color}
-                  focused={focused}
-                />
-              );
-            },
-          }}
-        />
-        <Tabs.Screen
-          name={ROUTES.PROFILE}
-          options={{
-            title: "Profile",
+            title: "Settings",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => {
               return (
                 <TabIcon
                   icon={icons.profile}
-                  name={"Profile"}
+                  name={"Settings"}
                   color={color}
                   focused={focused}
                 />

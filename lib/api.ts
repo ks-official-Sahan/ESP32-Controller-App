@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const APP_NAME = "Aura";
-export const SERVER_URL = "https://9e7d-45-121-91-37.ngrok-free.app";
+export const APP_NAME = "ESP_APP";
+export const SERVER_URL =
+  "https://774e-2402-d000-8128-40d-65a3-4c09-28f0-ef8.ngrok-free.app";
 
 const API_CONFIG = {
   baseURL: `${SERVER_URL}/${APP_NAME}`,
@@ -12,11 +13,25 @@ const API_CONFIG = {
 
 export default API_CONFIG;
 
+interface ActionDTO {
+  isTypeA?: boolean;
+  actionName?: string;
+  data?: any;
+  dataList?: Array<any>;
+  actionCode?: string;
+  action?: number;
+}
+
+export type { ActionDTO };
+
 interface ResponseDTO {
-  success?: boolean;
-  target?: string;
+  status?: boolean;
   message?: string;
   data?: any;
+  url?: string;
+  dataList?: Array<any>;
+  code?: string;
+  target?: string;
   error?: any;
 }
 
@@ -30,31 +45,40 @@ export enum RESULT {
   error = "error",
 }
 
+export type ReturnData = {
+  status: RESULT;
+  data?: any;
+  target?: string | undefined;
+  message?: string | undefined;
+};
+
 /* 
  Handle User Data Storage
 */
 
-export const saveUser = async (user: any) => {
+export type KEYS = "user" | "admin" | "session" | "data";
+
+export const saveData = async (key: KEYS = "user", data: any) => {
   try {
-    await AsyncStorage.setItem("user", JSON.stringify(user));
+    await AsyncStorage.setItem(key, JSON.stringify(data));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getUser = async () => {
+export const getData = async (key: KEYS = "user") => {
   try {
-    const user = await AsyncStorage.getItem("user");
-    return user ? JSON.parse(user) : null;
+    const data = await AsyncStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
   } catch (error) {
     console.log(error);
     return null;
   }
 };
 
-export const removeUser = async () => {
+export const removeData = async (key: KEYS = "user") => {
   try {
-    await AsyncStorage.removeItem("user");
+    await AsyncStorage.removeItem(key);
   } catch (error) {
     console.log(error);
   }

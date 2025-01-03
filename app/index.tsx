@@ -7,6 +7,7 @@ import DefaultBackgroundWrapper from "@/components/wrappers/DefaultBackgroundWra
 import { Image } from "expo-image";
 import { useEffect } from "react";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { AppData, LandingScreen } from "@/data";
 
 const Index = () => {
   const { isLoading, isLoggedIn } = useGlobalContext();
@@ -19,40 +20,35 @@ const Index = () => {
     <DefaultBackgroundWrapper>
       <View className="w-full min-h-[85vh] items-center justify-center px-4 lg:px-6 py-2">
         <Image
-          source={images.logo}
-          className="w-[150px] h-[84px]"
-          contentFit="contain"
-          transition={1000}
-        />
-        <Image
           source={images.cards}
           className="max-w-[350px] w-full h-[300px]"
           contentFit="contain"
           transition={1000}
         />
 
-        <View className="relative mt-5">
+        <View className="relative mt-12">
           <Text className="text-3xl text-white font-bold text-center">
-            Discover Endless Possibilities with{" "}
-            <Text className="text-secondary-200">Aura</Text>
+            {LandingScreen.intro}{" "}
+            <Text className="text-secondary-200">{AppData.name}</Text>
           </Text>
           <Image
             source={images.path}
-            className="w-[136px] h-[15px] absolute -bottom-3 right-24"
+            className="w-[136px] h-[15px] absolute -bottom-3 right-20"
             contentFit="contain"
           />
         </View>
         <Text className="text-sm text-gray-100 font-pregular mt-7 text-center">
-          Where creativity meets innovation: embark on a journey of limitless
-          exploration with Aura
+          {LandingScreen.description} {AppData.name}
         </Text>
-        <CustomButton
-          title={"Continue with Email"}
-          handlePress={() => {
-            router.push("/sign-in");
-          }}
-          containerStyle={"w-full mt-7"}
-        />
+        <View className="w-full px-5">
+          <CustomButton
+            title={"Continue"}
+            handlePress={() => {
+              router.push("/home");
+            }}
+            containerStyle={"w-full mt-7"}
+          />
+        </View>
       </View>
     </DefaultBackgroundWrapper>
   );
