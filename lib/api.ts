@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const APP_NAME = "ESP_APP";
-export const SERVER_URL =
-  "https://774e-2402-d000-8128-40d-65a3-4c09-28f0-ef8.ngrok-free.app";
+export const SERVER_URL = "https://f20b-103-21-165-128.ngrok-free.app";
 
 const API_CONFIG = {
   baseURL: `${SERVER_URL}/${APP_NAME}`,
+  wsURL: `${SERVER_URL.replace("http", "ws")}/${APP_NAME}`,
   headers: {
     "Content-Type": "application/json",
   },

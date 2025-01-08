@@ -11,7 +11,7 @@ import { getCurrentUser } from "@/lib/actions/fetch/auth";
 import { AppData } from "@/data";
 // import ActionService from "@/lib/actions/ActionService";
 
-// export type METHODS = "HTTP" | "WebSocket";
+export type METHODS = "HTTP" | "WebSocket";
 
 const Settings = () => {
   // const [method, setMethod] = useState<METHODS>("HTTP");
@@ -40,9 +40,6 @@ const Settings = () => {
           <Ionicons name="person" size={180} color="white" />
         </View>
         <View className="space-y-4">
-          <Text className="text-xl font-psemibold text-secondary-200 text-center">
-            {AppData.name}
-          </Text>
         </View>
         {/* <View className="space-y-0.5">
           <Text className="text-xl font-bold mb-4 text-white text-center">

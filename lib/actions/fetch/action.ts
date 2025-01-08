@@ -1,5 +1,5 @@
 import API_CONFIG, { ActionDTO, ResponseDTO } from "@/lib/api";
-import { ACTION } from "@/lib/endpoints";
+import { ACTION, SENSOR } from "@/lib/endpoints";
 import { handleError, handleResponse, handleResult } from "./main";
 
 export const doActionPost = async ({
@@ -49,6 +49,29 @@ export const doActionGet = async ({
     const responseDto: ResponseDTO = await handleResponse(response);
 
     const result = handleResult(responseDto);
+
+    // await saveData("data", result.data);
+
+    return result;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const getSensorData = async () => {
+  try {
+    const url = new URL(`${API_CONFIG.baseURL}${SENSOR}`);
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: API_CONFIG.headers,
+    });
+
+    const responseDto: ResponseDTO = await handleResponse(response);
+    console.log(responseDto);
+
+    const result = handleResult(responseDto);
+    console.log(result);
 
     // await saveData("data", result.data);
 

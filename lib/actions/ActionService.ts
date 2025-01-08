@@ -1,27 +1,15 @@
 import { METHODS } from "@/app/(tabs)/settings";
 import API_CONFIG, { ActionDTO } from "../api";
-import { ACTION } from "../endpoints";
+import { ACTION_WS } from "../endpoints";
 
 class ActionService {
   webSocket: null | WebSocket;
   webSocketURL: string;
-  currentMethod: METHODS;
 
   constructor() {
     this.webSocket = null;
-    this.webSocketURL = `${API_CONFIG.baseURL}/ws`;
-    this.currentMethod = "HTTP";
-  }
-
-  getMethod() {
-    return this.currentMethod;
-  }
-
-  setMethod(method) {
-    this.currentMethod = method;
-    if (method === "WebSocket" && !this.webSocket) {
-      this.initWebSocket();
-    }
+    this.webSocketURL = `${API_CONFIG.baseURL}/${ACTION_WS}`;
+    this.initWebSocket();
   }
 
   initWebSocket() {
